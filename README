@@ -1,0 +1,65 @@
+
+                                              README
+
+
+
+/***************************** Les fichiers présents dans le dossier ****************************************/
+
+
+1)Le Makefile avec le chemin par défaut (vérifiez que votre dossier contiki se trouve bien où il est indiqué).
+
+
+2)envoie_temperature.c
+
+  Description du programme :
+On utilise les fonctions offertes par Rime afin d'envoyer la température, l'énergie de la pile et la date 
+du capteur vers le puit. Ces 3 variables sont encore à vérifier et à décoder (format uint_16).
+A l'envoie d'une trame on affiche "Sending" 
+et à la réception "Sink got message from <@expéditeur>, seqno <n°séquence>, hops <nombre de sauts>: len <longueur trame> <données de la trame>"
+Vous l'avez compris le programme peut convenir à la fois au capteur et au puit à condition de donner l'adresse 1 au puit (en effet tout les périphériques envoient leur données au numéro 1).
+
+  Travail en cours :
+
+-Il faut transférer les données du puit au PC 
+->recherche en cours : Ecrire les données dans un fichier texte qui sera lue par un programme sur le PC.
+    FILE* fichier = NULL;
+    fichier = fopen("texte.txt", "r+");
+
+    if (fichier != NULL)
+    {
+        // On lit et on écrit dans le fichier
+        fputs("Test", fichier);
+        // ...
+        
+        fclose(fichier); // On ferme le fichier qui a été ouvert        
+    }
+Le problème rencontré est que FILE* n'est pas reconnu.
+
+-Il faut vérifier que les données de température, énergie et la date soient exactes.
+
+3)SimulationProbleme1.csc
+Permet de simuler le programme "envoie_temperature.c" sur Cooja avec 2 capteurs (le puit n°1 et le capteur) afin de représenter le Problème 1.
+
+
+
+
+/**********************************Démarche à suivre pour la simulation****************************************/
+
+-Ouvrir la console
+-aller dans le dossier cooja, par défaut "contiki/tools/cooja"
+-tapez "ant run"
+-Si tout c'est bien passé le simulateur est ouvert maintenant il faut lancer la simulation
+file -> Open Simulation -> Browse -> aller chercher la simulation (SimulationProbleme1.csc)
+-Une fois ouvert vous trouverez 3 cadres à gauche avec les commandes Play/Pause..., à droite les différents capteurs (vous pouvez afficher plus de détails comme les numéros des capteurs en clickant sur "Select Visualizer Skins"en haut de ce cadre). Le dernier cadre représente la console de tout les capteurs réunis.
+!!!Attention je n'ai jamais ouvert une simulation que je n'ai pas créé donc il se peut que ca ne marche pas je n'ai pas testé !!! Mais il y a une autre solution (recréer la simulation, ce qui prend 1min).
+
+Comment créer une simulation sous Cooja?
+-file -> New Simulation 
+-Mote Types -> Create mote Type -> Sky mote type -> Browse
+-Allez chercher le programme .c (attention pas la simulation !!!), ici envoie_temperature.c
+-compile -> create
+-choisissez le nombre de capteurs voulu
+Et voilà cotre simulation est prete.
+Remarque : Les capteurs sont généralement mis à porté max et des fois ils sont trop loin pour communiquer, il faut donc les déplacer ! (à l'aide de select visualize skins, on peut voir la portée des capteurs).
+
+

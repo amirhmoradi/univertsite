@@ -1,0 +1,1 @@
+Création d'un logiciel permettant la mesure, archivage et visualisation des mesures provenant d'un réseau de capteurs. Basé sur Contiki OS.
